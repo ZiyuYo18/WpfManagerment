@@ -1,0 +1,11 @@
+F:\vs2019_spacework\WpfManagerment\WpfControls\bin\Debug\WpfControls.dll
+F:\vs2019_spacework\WpfManagerment\WpfControls\bin\Debug\WpfControls.pdb
+F:\vs2019_spacework\WpfManagerment\WpfControls\obj\Debug\Instrument.g.cs
+F:\vs2019_spacework\WpfManagerment\WpfControls\obj\Debug\WpfControls_MarkupCompile.cache
+F:\vs2019_spacework\WpfManagerment\WpfControls\obj\Debug\WpfControls_MarkupCompile.lref
+F:\vs2019_spacework\WpfManagerment\WpfControls\obj\Debug\Instrument.baml
+F:\vs2019_spacework\WpfManagerment\WpfControls\obj\Debug\WpfControls.g.resources
+F:\vs2019_spacework\WpfManagerment\WpfControls\obj\Debug\WpfControls.csproj.CoreCompileInputs.cache
+F:\vs2019_spacework\WpfManagerment\WpfControls\obj\Debug\WpfControls.dll
+F:\vs2019_spacework\WpfManagerment\WpfControls\obj\Debug\WpfControls.pdb
+F:\vs2019_spacework\WpfManagerment\WpfControls\obj\Debug\WpfControls.csprojAssemblyReference.cache

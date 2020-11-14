@@ -1,0 +1,351 @@
+﻿<Window x:Class="WpfManagerment.View.LoginView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfManagerment.View"
+        xmlns:common="clr-namespace:WpfManagerment.Comment"
+        mc:Ignorable="d" Name="LoginWindow"
+        Title="系统登录" Height="600" Width="360"
+        FontFamily="Microsoft YaHei" FontWeight="ExtraLight"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        WindowStyle="None" AllowsTransparency="true" Background="{x:Null}"
+        >
+    <Window.Resources>
+        <ControlTemplate TargetType="Button" x:Key="CloseButtonTemplate">
+            <!--画一个关闭得按钮模板-->
+            <Border Background="Transparent" Name="back">
+                <Path Data="M0 0 12 12M0 12 12 0" Stroke="White" StrokeThickness="1" VerticalAlignment="Center" HorizontalAlignment="Center"></Path>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="back" Property="Background" Value="red"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <!--登录按钮模板-->
+        <ControlTemplate TargetType="Button" x:Key="LoginButtonTemplate">
+            <Border Background="#007DFA" CornerRadius="5">
+                <Grid>
+                    <Border Background="#22FFFFFF" CornerRadius="3" Name="back" Visibility="Hidden"/>
+                    <ContentControl Content="{TemplateBinding Content}" 
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Foreground="{TemplateBinding Foreground}"/>
+                </Grid>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Visibility" Value="Visible" TargetName="back"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        
+        <SolidColorBrush x:Key="TextBox.Static.Border" Color="#FFABAdB3"/>
+        <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA"/>
+        <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5"/>
+        <!--编辑模板，编辑模板副本-->
+        <!--用户名style-->
+        <Style x:Key="UserNameTextBoxStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="AllowDrop" Value="true"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}"
+                                SnapsToDevicePixels="True"
+                                 CornerRadius="5">
+                            <Grid VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="&#xe677;"  FontFamily="../Assets/Fonts/#iconfont" FontSize="20"
+                                           Foreground="#DDD" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                <ScrollViewer x:Name="PART_ContentHost" Grid.Column="1"
+                                              Focusable="false" HorizontalScrollBarVisibility="Hidden"
+                                              VerticalScrollBarVisibility="Hidden"
+                                              VerticalContentAlignment="Center"  MinHeight="20"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.MouseOver.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.Focus.Border}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
+                        <Condition Property="IsSelectionActive" Value="false"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+        <!--密码框style-->
+        <Style x:Key="PasswordBoxStyle" TargetType="{x:Type PasswordBox}">
+            <Setter Property="PasswordChar" Value="●"/>
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="AllowDrop" Value="true"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type PasswordBox}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}" 
+                                SnapsToDevicePixels="True"
+                                CornerRadius="5">
+                            <Grid VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="&#xe601;"  FontFamily="../Assets/Fonts/#iconfont" FontSize="20"
+                                           Foreground="#DDD" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,10,-0.4"/>
+                                <ScrollViewer x:Name="PART_ContentHost" Grid.Column="1"
+                                              Focusable="false" HorizontalScrollBarVisibility="Hidden"
+                                              VerticalScrollBarVisibility="Hidden"
+                                              VerticalContentAlignment="Center"  MinHeight="20" Grid.ColumnSpan="2" Margin="0,0,-0.2,-0.4"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.MouseOver.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.Focus.Border}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
+                        <Condition Property="IsSelectionActive" Value="false"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+        <!--验证码style-->
+        <Style x:Key="VlidationCodeTextBoxStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="AllowDrop" Value="true"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}"
+                                SnapsToDevicePixels="True"
+                                 CornerRadius="5">
+                            <Grid VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="80" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="&#xe63c;"  FontFamily="../Assets/Fonts/#iconfont" FontSize="20"
+                                           Foreground="#DDD" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                <ScrollViewer x:Name="PART_ContentHost" Grid.Column="1"
+                                              Focusable="false" HorizontalScrollBarVisibility="Hidden"
+                                              VerticalScrollBarVisibility="Hidden"
+                                              VerticalContentAlignment="Center"  MinHeight="20"/>
+                                <Image Source="../Assets/Images/yanzhengma.jpg" Grid.Column="2" VerticalAlignment="Center" Margin="10,0"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.MouseOver.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.Focus.Border}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
+                        <Condition Property="IsSelectionActive" Value="false"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Border Margin="5" Background="White" CornerRadius="10">
+        <!--阴影设置-->
+        <Border.Effect>
+            <DropShadowEffect Color="Gray" ShadowDepth="0" BlurRadius="5" Opacity="0.3" Direction="0"/>
+        </Border.Effect>
+        <Grid>
+            <!--第一部分-->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.8*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="90"/>
+            </Grid.RowDefinitions>
+            <Border Background="#007DFA" CornerRadius="10,10,0,0" MouseLeftButtonDown="WinMove_LeftButtonDown"/>
+            <!--关闭得按钮设置-->
+            <Button VerticalAlignment="Top" HorizontalAlignment="Right" Width="40" Height="30" 
+                    Template="{StaticResource CloseButtonTemplate}"
+                    Command="{Binding CloseWindowCommand}"
+                    CommandParameter="{Binding ElementName=LoginWindow}"/>
+            <!--布局图标和系统名字-->
+            <StackPanel VerticalAlignment="Bottom" Margin="0,0,0,30">
+                <Border Background="White" VerticalAlignment="Center" HorizontalAlignment="Center"
+                        CornerRadius="50" Margin="0,0,0,10">
+                    <!--阴影设置-->
+                    <Border.Effect>
+                        <DropShadowEffect Color="White" ShadowDepth="0" BlurRadius="5" Opacity="0.3" Direction="0"/>
+                    </Border.Effect>
+                    <Border Width="80" Height="80">
+                        <Border.Background>
+                            <ImageBrush ImageSource="../Assets/Images/Login.png" />
+                        </Border.Background>
+                    </Border>
+                </Border>
+                <TextBlock Text="WPF学员管理平台" HorizontalAlignment="Center" Foreground="White" FontSize="18"/>
+            </StackPanel>
+            <!--第二部分-->
+            <Grid Grid.Row="1" FocusManager.FocusedElement="{Binding ElementName=txtUserName}">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition MinHeight="23" Height="auto"/>
+                </Grid.RowDefinitions>
+                <!--用户名框-->
+                <TextBox Height="43" Text="{Binding LoginModel.UserName }"
+                         Style="{DynamicResource UserNameTextBoxStyle}" FontSize="16" Foreground="#555"
+                         VerticalAlignment="Center" Margin="20,0"
+                         Name="txtUserName" >
+                    <TextBox.InputBindings>
+                        <KeyBinding Key=" Enter" Command="{Binding LoginCommand}"
+                                    CommandParameter="{Binding ElementName=LoginWindow}"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+
+                <!--密码框-->
+                <PasswordBox Grid.Row="1" Height="43" Style="{DynamicResource PasswordBoxStyle}"
+                             FontSize="16" Foreground="#555" VerticalAlignment="Center" 
+                             Margin="20,13.6,0,12.8" HorizontalAlignment="Left" Width="310"
+                             common:PasswordHelper.Attach="true"
+                             common:PasswordHelper.Password="{Binding LoginModel.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <PasswordBox.InputBindings>
+                        <KeyBinding Key=" Enter" Command="{Binding LoginCommand}"
+                                    CommandParameter="{Binding ElementName=LoginWindow}"/>
+                    </PasswordBox.InputBindings>
+                </PasswordBox>
+                <!--验证码框-->
+                <TextBox Grid.Row="2"  Text="{Binding LoginModel.ValidationCode }" 
+                         Height="43" Style="{DynamicResource VlidationCodeTextBoxStyle}"
+                         Margin="20,0">
+                    <TextBox.InputBindings>
+                        <KeyBinding Key=" Enter" Command="{Binding LoginCommand}"
+                                    CommandParameter="{Binding ElementName=LoginWindow}"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+                <!--登录按钮-->
+                <Button Content="登    录" Grid.Row="3" 
+                        Height="43" Margin="20,0" Template="{StaticResource LoginButtonTemplate}" 
+                        Foreground="White" FontSize="20"
+                        Command="{Binding LoginCommand}"
+                        CommandParameter="{Binding ElementName=LoginWindow}"
+                        />
+                <!--登录消息-->
+                <TextBlock Text="{Binding ErrorMessege}" Foreground="Red" Grid.Row="4" FontSize="13" HorizontalAlignment="Center"
+                          TextWrapping="Wrap"/>
+            </Grid>
+            <!--第三部分-->
+            <Grid Grid.Row="2" Margin="20,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <!--第三方登录得横线-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Border BorderBrush="#DDD" BorderThickness="0,0,0,1" VerticalAlignment="Center"/>
+                    <Border BorderBrush="#DDD" BorderThickness="0,0,0,1" VerticalAlignment="Center" Grid.Column="2"/>
+                    <TextBlock Text="第三方登录" Grid.Column="1" Foreground="#CCC" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                </Grid>
+                <!--三个图标-->
+                <UniformGrid Columns="5" Grid.Row="1">
+                    <!--鼠标滑过颜色变化-->
+                    <UniformGrid.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="#DDD"/>
+                            <Setter Property="FontSize" Value="40"/>
+                            <Setter Property="FontFamily" Value="../Assets/Fonts/#iconfont"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="#007DFA"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </UniformGrid.Resources>
+                    <TextBlock Text="&#xe73e;"/>
+                    <Border/>
+                    <TextBlock Text="&#xe62a;" />
+                    <Border />
+                    <TextBlock Text="&#xe666;" />
+                </UniformGrid>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
